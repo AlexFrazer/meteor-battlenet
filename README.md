@@ -7,6 +7,12 @@ guidance:
 - [Meteor-accounts-stripe](https://github.com/khamoud/meteor-accounts-stripe)
 
 NOTE: Currently not working.
+I was leveraging Meteor-linkedin in specific to try to diagnose what the
+problem is.
+
+_Because I am trying to diagnose the problems, this is currently
+**very** similar to the other packages. This is not a finished product
+and will change._
 
 ### How to use in development
 
