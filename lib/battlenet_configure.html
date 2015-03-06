@@ -1,10 +1,16 @@
 <template name="configureLoginServiceDialogForBattlenet">
   <p>
-    First, you'll need to register your app on Stripe. Follow these steps:
+    Configure your Battle.net API account
   </p>
-<ol>
-  <li>
-    Visit <a href="https://manage.stripe.com/account" target="_blank">https://manage.stripe.com/account</a>
-  </li>
-</ol>
+  <ol>
+    <li>
+      Visit <a href="https://dev.battle.net/apps/mykeys" target="_blank">The API Page</a>
+    </li>
+    <li>
+    Generate new keys
+    </li>
+    <li>
+    Set the Redirect URI to {{base_url}}/_oauth/battlenet?close
+    </li>
+  </ol>
 </template>
