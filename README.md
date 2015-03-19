@@ -1,38 +1,29 @@
 # Battlenet for Meteor
-Authenticate users with battle.net on your site.
-Allows you to
-
-## BIG IMPORTANT NOTE
-In order for this package to work, you _must_ use `https://` and SSL.
-You might see the following error message in your _server_ console if it fails.
-
-```
-W20150318-16:05:20.101(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
-W20150318-16:05:20.102(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
-W20150318-16:05:20.103(-4) (oauth_server.js:398) Error in OAuth Server: invalid_request
-```
-
-I enabled SSL locally using nginx and editting the `/etc/hosts`.
+Authenticate Battle.net users on your site.
 
 ## Usage
 
-#### Download and log in
+### Adding to project
 
 First download the project.
 
 ```
-meteor add corvid:battlenet
+meteor add afrazer:battlenet
 ```
 
 If you are using an `accounts-ui` package, this will appear with `{{>loginButtons}}` in a template.
 
+**to use locally**
+
+Clone the github and add a symlink to your project's package folder.
 ```
-<template name="bar">
-  <div class="container">
-    {{>loginButtons}}
-  </div>
-</template>
+$ mkdir /path/to/yourproject/packages
+$ git clone https://github.com/AlexFrazer/meteor-battlenet.git
+$ ln -s /path/to/meteor-battlenet /path/to/yourproject/packages/
+$ meteor add afrazer:battlenet
 ```
+
+### Configuration
 
 On the first use, you can use `Configure Battlenet` and follow the instructions to get set up.
 
@@ -53,7 +44,7 @@ ServiceConfiguration.configurations.insert({
 ```
 
 
-#### Data on account retrieval
+### Logging in and user details.
 When a user is authenticated, their profile will be populated with their World of Warcraft character
 list.
 
@@ -89,12 +80,23 @@ list.
 ## Known issues
 Currently, the scope is confined to `wow.profile` and the profile is the basic user info without extra fields.
 
-## Feature feature plans
+### SSL
+In order for this package to work, you _must_ use `https://` and SSL.
+You might see the following error message in your _server_ console if it fails.
+
+```
+W20150318-16:05:20.101(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
+W20150318-16:05:20.102(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
+W20150318-16:05:20.103(-4) (oauth_server.js:398) Error in OAuth Server: invalid_request
+```
+
+## Future feature plans
 Please feel free to leave a request in the `issues` tab on this github page, or to submit a pull request.
 I am planning to implement the following in the `Battlenet` export for easier use:
 
 - Search through characters
 - Add extra scope, allowing fetching of more player details
+- Add features for guild support
 
 ---
 

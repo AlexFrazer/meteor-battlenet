@@ -1,12 +1,13 @@
 Package.describe({
-  name: "corvid:battlenet",
-  summary: "OAuth2 authentication handler for battlenet login",
-  version: "1.0.0",
+  name: "afrazer:battlenet",
+  summary: "OAuth authentication with battlenet",
+  documentation: "README.md",
+  version: "1.0.1",
   git: "https://github.com/AlexFrazer/battlenet-auth.git"
 });
 
 Package.onUse(function(api) {
-  api.use('accounts-base', ['client', 'server']);
+  api.use('accounts-base@1.2.0', ['client', 'server']);
   api.use('oauth2@1.1.2', ['client', 'server']);
   api.use('http@1.0.10', ['client', 'server']);
   api.use(['underscore@1.0.2', 'service-configuration@1.0.3'], ['client', 'server']);
