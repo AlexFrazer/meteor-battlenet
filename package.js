@@ -2,7 +2,7 @@ Package.describe({
   name: "afrazer:battlenet",
   summary: "OAuth authentication with battlenet",
   documentation: "README.md",
-  version: "1.0.1",
+  version: "1.0.2",
   git: "https://github.com/AlexFrazer/battlenet-auth.git"
 });
 

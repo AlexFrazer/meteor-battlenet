@@ -3,26 +3,6 @@ Authenticate Battle.net users on your site.
 
 ## Usage
 
-### Adding to project
-
-First download the project.
-
-```
-meteor add afrazer:battlenet
-```
-
-If you are using an `accounts-ui` package, this will appear with `{{>loginButtons}}` in a template.
-
-**to use locally**
-
-Clone the github and add a symlink to your project's package folder.
-```
-$ mkdir /path/to/yourproject/packages
-$ git clone https://github.com/AlexFrazer/meteor-battlenet.git
-$ ln -s /path/to/meteor-battlenet /path/to/yourproject/packages/
-$ meteor add afrazer:battlenet
-```
-
 ### Configuration
 
 On the first use, you can use `Configure Battlenet` and follow the instructions to get set up.
@@ -44,7 +24,7 @@ ServiceConfiguration.configurations.insert({
 ```
 
 
-### Logging in and user details.
+### Using authentication
 When a user is authenticated, their profile will be populated with their World of Warcraft character
 list.
 
@@ -77,17 +57,82 @@ list.
 }
 ```
 
-## Known issues
-Currently, the scope is confined to `wow.profile` and the profile is the basic user info without extra fields.
+---
 
-### SSL
-In order for this package to work, you _must_ use `https://` and SSL.
+### Known issues
+
+#### SSL
+In order for this package to work, you **must** use `https://` and SSL.
 You might see the following error message in your _server_ console if it fails.
 
 ```
 W20150318-16:05:20.101(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
 W20150318-16:05:20.102(-4) (oauth_server.js:78) Unable to parse state from OAuth query:
 W20150318-16:05:20.103(-4) (oauth_server.js:398) Error in OAuth Server: invalid_request
+```
+
+**Possible Solution on Mac OS X**
+
+Add a line to `/etc/hosts` to alias an `https://` site.
+```
+127.0.0.1 https://yoursite.com/
+```
+
+Set up and install `nginx`
+
+```
+$ brew install nginx
+$ mkdir -p /usr/local/etc/nginx/sites-enabled
+$ vim /usr/local/etc/nginx/sites-enabled/yoursite.com
+```
+Here is a sample configuration
+```
+# Upstreams
+upstream subdomain {
+  server 127.0.0.1:3000;
+}
+
+# HTTP Server
+server {
+  listen 80;
+  server_name yoursite.com;
+  rewrite ^ https://$server_name$request_uri permanent;
+  try_files $uri/index.html $uri.html $uri @yoursite;
+}
+
+# HTTPS Server
+server {
+  listen 443 ssl;
+  server_name yoursite.com;
+
+  root /usr/share/nginx/html;
+  error_log /usr/local/etc/nginx/sites-available/error.log crit;
+
+  ssl_session_timeout 5m;
+  ssl_certificate /usr/local/etc/nginx/ssl/afrazer.com.crt;
+  ssl_certificate_key /usr/local/etc/nginx/ssl/afrazer.com.key;
+  ssl_prefer_server_ciphers on;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+  location / {
+    proxy_pass http://subdomain/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forward-Proto http;
+    proxy_set_header X-Nginx-Proxy true;
+    proxy_redirect off;
+  }
+}
+```
+Then, you must set the `ROOT_URL` of your application to be the `https://` site and restart nginx
+
+```
+$ sudo nginx -s stop && sudo nginx
+$ export ROOT_URL="https://yoursite.com"
 ```
 
 ## Future feature plans
