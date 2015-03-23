@@ -57,6 +57,17 @@ list.
 }
 ```
 
+### View an example application
+
+The directory `example/` on github features a sample application. Try running it!
+
+A warning: you will need to set up SSL and HTTPS:// first (see below).
+
+```
+$ cd example/
+$ meteor
+```
+
 ---
 
 ### Known issues
