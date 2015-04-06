@@ -1,0 +1,19 @@
+<template name="characterList">
+{{#contentFor "headerTitle"}}
+<h1 class="title">Characters</h1>
+{{/contentFor}}
+
+{{#ionView}}
+  {{#ionContent}}
+    {{#ionList}}
+      {{#each this}}
+        {{#ionItem avatar=true path="CharacterShow" iconRight=true}}
+          <img src="{{avatarUrl this}}" alt="{{name}}"/>
+          {{>ionIcon icon="ios-arrow-right"}}
+          {{name}}
+        {{/ionItem}}
+      {{/each}}
+    {{/ionList}}
+  {{/ionContent}}
+{{/ionView}}
+</template>

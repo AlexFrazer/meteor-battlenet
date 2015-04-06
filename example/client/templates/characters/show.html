@@ -1,0 +1,21 @@
+<template name="characterShow">
+{{#contentFor "headerTitle"}}
+  <h1 class="title">{{name}}</h1>
+{{/contentFor}}
+
+{{#ionView}}
+  {{#ionContent class="padding"}}
+    <div class="list card">
+      {{#ionItem class="item-avatar"}}
+        <img src="{{avatarUrl this}}" alt="{{name}}"/>
+        <h2>{{name}}</h2>
+        <p class="subdued">{{realm}}</p>
+      {{/ionItem}}
+    </div>
+  {{/ionContent}}
+{{/ionView}}
+</template>
+
+<template name="character.pvp">
+</template>
+

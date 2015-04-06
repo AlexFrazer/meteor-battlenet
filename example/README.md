@@ -1,12 +1,13 @@
-# Basic Battlenet Example
+# Battlenet Example
 
-### What the app does
+A very basic application using battlenet authentication and the API
 
-- Shows log in buttons
-- If the user is authenticated, shows their characters
-- Clicking the user profile will show more information
-- Display error messages if a user is not authenticated.
+### Routes
 
-### Dependencies
+| Route            | Data                               |
+| -----------------|------------------------------------|
+| /                | homepage and login                 |
+| /<userId>        | all characters belonging to a user |
+| /<realm>/<name>  | a single wow character             |
+| /<realm>/<guild> | all characters belonging to guild  |
 
-Uses iron:router and bootstrap.

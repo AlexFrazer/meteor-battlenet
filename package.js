@@ -2,12 +2,12 @@ Package.describe({
   name: "afrazer:battlenet",
   summary: "OAuth authentication with battlenet",
   documentation: "README.md",
-  version: "1.0.3",
+  version: "1.0.4",
   git: "https://github.com/AlexFrazer/battlenet-auth.git"
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('METEOR@1.0.4');
+  // api.versionsFrom('METEOR@1.1.1');
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-oauth', ['client', 'server']);
   api.use('oauth', ['client', 'server']);

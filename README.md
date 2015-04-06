@@ -7,8 +7,13 @@ Authenticate Battle.net users on your site.
 
 On the first use, you can use `Configure Battlenet` and follow the instructions to get set up.
 
-Alternatively, you can manually add the service configuration. Add the following in server side code,
-adding your client id and secret.
+Alternatively, You can manually set it up with `service-configuration`
+
+```
+$ meteor add service-configuration
+```
+
+then add something like this to your server-side code.
 
 ```
 ServiceConfiguration.configurations.remove({
@@ -57,6 +62,41 @@ list.
 }
 ```
 
+### Making requests to Battle.net
+
+It's pretty easy to make requests to blizzard using `Meteor.method`s
+```
+Meteor.methods({
+  /**
+  * Returns the profile of all guild members in a given guild
+  * @param {String} realm the realm of the guild
+  * @param {String} guildName the name of the guild
+  * @returns {Object} an array of the members in the guild.
+  */
+  getGuildMemberProfiles: function(realm, guildName) {
+    // get the client ID
+    var clientId = ServiceConfigurations.configurations.findOne({
+service: "battlenet"});
+    var baseUrl = "https://us.api.battle.net/wow/guild";
+    var requestUrl = baseUrl + "/" + realm + "/" + guildName +"?fields=members&locale=en_US&apikey=" + apikey;
+
+    this.unblock();
+    var data = Meteor.http.get(requestUrl);
+    return data.members;
+  }
+});
+```
+You can then use `Meteor.call()` to run this method, which passes the
+return values to the callback
+
+```
+Meteor.call('getGuildMembers', 'Draenor', 'Ascension', function(error, members) {
+  _.each(members, function(member)) {
+    console.log(member.character.name);
+  }
+});
+```
+
 ### View an example application
 
 The directory `example/` on github features a sample application. Try running it!
@@ -71,6 +111,14 @@ $ meteor
 ---
 
 ### Known issues
+
+#### useraccounts
+
+In order to use this package with `useraccounts`, you must add
+`accounts-ui` to your project
+```
+$ meteor add accounts-ui
+```
 
 #### SSL
 In order for this package to work, you **must** use `https://` and SSL.

@@ -5,12 +5,14 @@
 # but you can also edit it by hand.
 
 meteor-platform
-insecure
 iron:router
-sacha:spin
-twbs:bootstrap
-ian:accounts-ui-bootstrap-3
 fourseven:scss
-underscore
-afrazer:battlenet
+meteoric:ionic-sass
+meteoric:ionicons-sass
+meteoric:ionic
+useraccounts:ionic
+useraccounts:core
+sacha:spin
 service-configuration
+afrazer:battlenet
+accounts-ui

@@ -1,0 +1,2 @@
+Template.characterShow.rendered = function() {
+}

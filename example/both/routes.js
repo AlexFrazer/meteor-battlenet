@@ -1,26 +1,37 @@
 Router.configure({
-  layoutTemplate: "layout",
-  loadingTemplate: "loading",
-  notFoundTemplate: "notFound"
+  layoutTemplate: 'layout',
+  notFoundTemplate: 'notFound',
+  loadingTemplate: 'loading'
 });
 
 Router.map(function() {
-
-  this.route('characterList', {
-    waitOn: function() {
-      return Meteor.subscribe('userCharacters', Meteor.userId());
-    },
+  this.route('Home', {
     path: '/',
-    controller: 'CharacterController',
-    action: 'characterList'
+    template: 'home'
   });
 
-  this.route('characterShow', {
+  this.route('CharacterList', {
     waitOn: function() {
-      return Meteor.subscribe('userCharacters', this.params.userId);
+      return Meteor.subscribe('characters', this.params._id);
     },
-    path: '/:userId/:realm/:characterName',
-    controller: 'CharacterController',
-    action: 'characterShow'
-  })
+    path: '/:_id',
+    template: 'characterList',
+    data: function() {
+      return Characters.find({ userId: this.params._id });
+    }
+  });
+
+  this.route('CharacterShow', {
+    waitOn: function() {
+      return Meteor.subscribe('character', this.params.realm, this.params.name);
+    },
+    path: '/:realm/:name',
+    template: 'characterShow',
+    data: function() {
+      return Characters.findOne({
+        realm: this.params.realm,
+        name: this.params.name
+      })
+    }
+  });
 });
